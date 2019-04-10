@@ -45,6 +45,8 @@ app.use(session({
 app.use('/', require('./routes/index'));
 
 app.use('/signup', require('./routes/signup'));
+app.use('/signin', require('./routes/signin'));
+app.use('/signout', require('./routes/signout'));
 
 app.use('/profile', require('./routes/profile'));
 
