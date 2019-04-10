@@ -1,0 +1,149 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+    <div class="row justify-content-center mdl-card__title">
+        <h2 class="mdl-card__title-text form--title">{{ title}}</h2>
+    </div>
+
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+            <a href="#general" class="mdl-tabs__tab is-active">General</a>
+            <a href="#insulin" class="mdl-tabs__tab">Insulin</a>
+            <a href="#strips" class="mdl-tabs__tab">Strips</a>
+        </div>
+
+        <div class="mdl-tabs__panel is-active" id="general">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="mdl-card form--login mdl-shadow--2dp" style="width: 680px;">
+
+                        <form autocomplete="off" method="POST" class="mdl-card__form" action="/profile/edit">
+                            <!--div style="width: 100%;" class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{##}{ user.email }}" autocomplete="new-password" class="mdl-textfield__input" name="email" type="email" id="email" data-required disabled>
+                                <label class="mdl-textfield__label" for="email">Email...</label>
+                                <span class="mdl-textfield__error">Invalid email!</span>
+                            </div-->
+
+                            <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ user.first_name }}" autocomplete="new-password" class="mdl-textfield__input" name="first_name" type="text" id="first_name" data-required>
+                                <label class="mdl-textfield__label" for="first_name">First name...</label>
+                                <!--span class="mdl-textfield__error">Invalid value</span-->
+                            </div>
+
+                            <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ user.last_name }}" autocomplete="new-password" class="mdl-textfield__input" name="last_name" type="text" id="last_name" data-required>
+                                <label class="mdl-textfield__label" for="last_name">Last name...</label>
+                                <!--span class="mdl-textfield__error">Invalid value</span-->
+                            </div>
+
+                            <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ user.phone }}" autocomplete="new-password" class="mdl-textfield__input" name="phone" type="tel" id="phone">
+                                <label class="mdl-textfield__label" for="phone">Phone...</label>
+                                <span class="mdl-textfield__error">Invalid value!</span>
+                            </div>
+
+                            <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ user.birthday|date('Y-m-d') }}" autocomplete="off" class="mdl-textfield__input" name="birthday" type="date" id="birthday">
+                                <label class="mdl-textfield__label" for="birthday">Birthday...</label>
+                                <span class="mdl-textfield__error">Invalid value!</span>
+                            </div>
+
+                            <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ user.height }}" autocomplete="new-password" class="mdl-textfield__input" name="height" type="text" id="height">
+                                <label class="mdl-textfield__label" for="height">Height...</label>
+                                <span class="mdl-textfield__error">Invalid value!</span>
+                            </div>
+
+
+                            <!--div class="form-group row mb-0">
+                                <div class="col-md-8 offset-md-4"  style="text-align: center;">
+                                    <button type="submit" class="mdl-button mdl-js-button">Save</button>
+                                </div>
+                                <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                            </div-->
+                            <div class="mdl-cell--12-col mdl-cell--action">
+                                <button class="mdl-button mdl-js-button" type="submit">Save</button>
+                                <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-tabs__panel" id="insulin">
+            <!--div class="message">message}}</div-->
+            {% if insulin %}
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Volume</th>
+                        <th>&nbsp;</th>
+                        <th>
+                            <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for value in insulin %}
+                        <tr>
+                            <td>{{ value.name }}</td>
+                            <td>{{ value.type }}</td>
+                            <td>{{ value.volume }}</td>
+                            <td>
+                                <a href="/profile/insulin/edit/{{ value.insulin_id }}"><i class="material-icons">edit</i></a>
+                            </td>
+                            <td>
+                                <a href="/profile/insulin/delete/{{ value.insulin_id }}"><i class="material-icons">delete</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            {% else %}
+                <div>You still have not any insulin!</div>
+                <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
+            {% endif %}
+        </div>
+        <div class="mdl-tabs__panel" id="strips">
+            {% if strips %}
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Device name</th>
+                        <th>Amount</th>
+                        <th>&nbsp;</th>
+                        <th>
+                            <a href="/profile/strip/add"><i class="material-icons">add_box</i></a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for value in strips %}
+                        <tr>
+                            <td>{{ value.name }}</td>
+                            <td>{{ value.device_name }}</td>
+                            <td>{{ value.amount }}</td>
+                            <td>
+                                <a href="/profile/strip/edit/{{ value.strip_id }}"><i class="material-icons">edit</i></a>
+                            </td>
+                            <td>
+                                <a href="/profile/strip/delete/{{ value.strip_id }}"><i class="material-icons">delete</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            {% else %}
+                <div>You still have not any strips!</div>
+                <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

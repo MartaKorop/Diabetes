@@ -47,6 +47,8 @@ app.use('/', require('./routes/index'));
 app.use('/signup', require('./routes/signup'));
 app.use('/signin', require('./routes/signin'));
 app.use('/signout', require('./routes/signout'));
+app.use('/forgot-password', require('./routes/forgot-password'));
+app.use('/reset-password', require('./routes/reset-password'));
 
 app.use('/profile', require('./routes/profile'));
 

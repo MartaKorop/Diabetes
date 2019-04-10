@@ -17,4 +17,22 @@ module.exports = {
             return false;
         }
     },
+
+    smtpConfig: function(req, res, next) {
+        return {
+            service: 'Gmail',
+            auth: {
+                user: 'holynicholaslviv',
+                pass: '123456789zxcvbn'
+            },
+        }
+    },
+
+    requireLogin: function(req, res, next) {
+        if (!req.session.user) {
+            res.redirect('/signin?dest=' + req.baseUrl);
+        } else {
+            next();
+        }
+    },
 };
