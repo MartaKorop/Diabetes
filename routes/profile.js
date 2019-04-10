@@ -56,6 +56,61 @@ router.post('/edit', config.requireLogin, function (req, res, next) {
         }
     });
 
+    router.get('/insulin/add', config.requireLogin, function (req, res, next) {
+        res.render('insulin-edit', {
+            title: 'Add new insulin',
+            action: 'add',
+        });
+    });
+
+    router.post('/insulin/add', config.requireLogin, function (req, res, next) {
+        let user_id = req.session.user.id;
+        let {name, type, volume } = req.body;
+
+        let params = [name, type, volume, user_id,];
+
+        Insulin.add(req, params, function (err, results) {
+            if (err) {
+                res.send("Something went wrong! " + err);
+            } else {
+                res.redirect('/profile');
+            }
+        });
+    });
+
+    router.get('/insulin/edit/:path', config.requireLogin, function (req, res, next) {
+        let insulin_id = req.params.path;
+
+        Insulin.getById(req, insulin_id, function (err, results) {
+            if (err) {
+                res.send("Something went wrong! " + err);
+            } else {
+                res.render('insulin-edit', {
+                    title: 'Edit insulin ' + results.name,
+                    action: 'edit',
+                    insulin: results,
+                });
+            }
+        });
+
+    });
+
+    router.post('/insulin/edit/:path', config.requireLogin, function (req, res, next) {
+        let user_id = req.session.user.id;
+        let insulin_id = req.params.path;
+
+        let {name, type, volume} = req.body;
+        let params = [name, type, volume, insulin_id];
+
+        Insulin.update(req, params, function (err, results) {
+            if (err) {
+                res.send("Something went wrong! " + err);
+            } else {
+                res.redirect('/profile');
+            }
+        });
+    });
+
 });
 
 
