@@ -1,0 +1,74 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <!--h3 class="page-title">{{title}}</h3-->
+
+    {% set strip_id = '' %}
+    {% set device_name = '' %}
+    {% set name = '' %}
+    {% set amount = '' %}
+    {% set user_id = '' %}
+
+    {% if strip and (action == 'edit') %}
+        {% set strip_id = strip.strip_id %}
+        {% set device_name = strip.device_name %}
+        {% set name = strip.name %}
+        {% set amount = strip.amount %}
+        {% set user_id = strip.user_id %}
+    {% endif %}
+
+    <!--div class="mdl-grid grid__category_list">
+        <div class="message">{message }}</div>
+    </div-->
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="mdl-card form--register">
+                <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text form--title">{{ title }}</h2>
+                </div>
+                <form autocomplete="off" method="POST" class="mdl-card__form" action="/profile/strip/{{ action }}/{{ strip_id }}">
+                    <div class="mdl-grid">
+                        {% if strip and (action == 'edit') %}
+                            <div class="mdl-cell--12-col">
+                                <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                    <input value="{{ strip_id }}" class="mdl-textfield__input" name="strip_id" type="text" id="strip_id" data-required disabled>
+                                    <label class="mdl-textfield__label" for="strip_id">Strip id...</label>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ device_name }}" class="mdl-textfield__input" name="device_name" type="text" id="device_name" data-required>
+                                <label class="mdl-textfield__label" for="device_name">Device name...</label>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ name }}" class="mdl-textfield__input" name="name" type="text" id="name" data-required>
+                                <label class="mdl-textfield__label" for="name">Name...</label>
+                            </div>
+                        </div>
+
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ amount }}" class="mdl-textfield__input" name="amount" type="number" id="amount" data-required>
+                                <label class="mdl-textfield__label" for="amount">Amount...</label>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col mdl-cell--action">
+                            <button class="mdl-button mdl-js-button" type="submit">Save</button>
+                            <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

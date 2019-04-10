@@ -111,6 +111,62 @@ router.post('/edit', config.requireLogin, function (req, res, next) {
         });
     });
 
+    router.get('/strip/add', config.requireLogin, function (req, res, next) {
+        res.render('strip-edit', {
+            title: 'Add new strip',
+            action: 'add',
+        });
+    });
+
+    router.post('/strip/add', config.requireLogin, function (req, res, next) {
+        let user_id = req.session.user.id;
+        let {device_name, name, amount} = req.body;
+
+        let params = [device_name, name, amount, user_id,];
+
+        Strip.add(req, params, function (err, results) {
+            if (err) {
+                res.send("Something went wrong! " + err);
+            } else {
+                res.redirect('/profile');
+            }
+        });
+    });
+
+    router.get('/strip/edit/:path', config.requireLogin, function (req, res, next) {
+        let strip_id = req.params.path;
+
+        Strip.getById(req, strip_id, function (err, results) {
+            if (err) {
+                res.send("Something went wrong! " + err);
+            } else {
+                res.render('strip-edit', {
+                    title: 'Edit strip ' + results.name,
+                    action: 'edit',
+                    strip: results,
+                });
+            }
+        });
+    });
+
+    router.post('/strip/edit/:path', config.requireLogin, function (req, res, next) {
+        let user_id = req.session.user.id;
+        let strip_id = req.params.path;
+
+        let {device_name, name, amount} = req.body;
+        let params = [device_name, name, amount, strip_id];
+
+        Strip.update(req, params, function (err, results) {
+            if (err) {
+                res.send("Something went wrong! " + err);
+            } else {
+                res.redirect('/profile');
+            }
+        });
+    });
+    //TODO
+    //possibility to delete insulin and strips
+
 });
 
 
