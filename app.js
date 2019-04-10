@@ -42,7 +42,9 @@ app.use(session({
 }));
 
 
+app.use('/', require('./routes/index'));
 
+app.use('/signup', require('./routes/signup'));
 
 app.use('/profile', require('./routes/profile'));
 
