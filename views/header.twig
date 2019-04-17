@@ -19,12 +19,23 @@
 
         <nav class="mdl-navigation mdl-layout--large-screen-only">
             {% if session.user %}
+                <div class="dropdown">
+                    <button class="dropbtn">Add</button>
+                    <div class="dropdown-content">
+                        <a href="/note/add">Note</a>
+                        <a href="/sugar/add">Sugar</a>
+                        <a href="/injection/add">Injection</a>
+                        <a href="/glycated/add">Glycated hb</a>
+                        <a href="/pressure/add">Pressure</a>
+                        <a href="/pulse/add">Pulse</a>
+                        <a href="/weight/add">Weight</a>
+                    </div>
+                </div>
+                <a class="mdl-navigation__link" href="/profile"><i class="material-icons">account_circle</i> My profile</a>
 
-                <a class="mdl-navigation__link" href="/profile"><i class="material-icons">account_box</i> My profile</a>
-
-                <a class="mdl-navigation__link" href="/signout">Sign out</a>
+                <a class="mdl-navigation__link" href="/signout"><i class="material-icons">exit_to_app</i> Sign out</a>
             {% else %}
-                <a class="mdl-navigation__link" href="/signup">Sign up</a>
+                <a class="mdl-navigation__link" href="/signup"><i class="material-icons">person_add</i> Sign up</a>
                 <a class="mdl-navigation__link" href="/signin">Sign in</a>
             {% endif %}
         </nav>
