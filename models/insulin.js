@@ -30,7 +30,7 @@ module.exports = {
     getByUserId: function (req, params, callback) {
         let db = req.db;
 
-        let sql = 'SELECT * FROM insulin WHERE user_id = ?';
+        let sql = 'SELECT * FROM insulin WHERE user_id = ? ORDER BY type DESC';
         db.query(sql, params, function (err, results) {
             if (err) {
                 callback(err, null);
