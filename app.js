@@ -52,6 +52,7 @@ app.use('/reset-password', require('./routes/reset-password'));
 
 app.use('/profile', require('./routes/profile'));
 
+app.use('/note', require('./routes/note'));
 app.use('/sugar', require('./routes/sugar'));
 app.use('/injection', require('./routes/injection'));
 app.use('/glycated', require('./routes/glycated'));
