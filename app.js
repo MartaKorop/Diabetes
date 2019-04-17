@@ -54,7 +54,7 @@ app.use('/profile', require('./routes/profile'));
 
 app.use('/sugar', require('./routes/sugar'));
 app.use('/injection', require('./routes/injection'));
-
+app.use('/glycated', require('./routes/glycated'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
