@@ -1,0 +1,67 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <!--h3 class="page-title">{{title}}</h3-->
+
+    {% set volume = '' %}
+    {% set insulin_id = '' %}
+    {% set time = '' %}
+    {% set is_new = 0 %}
+
+    {% if injection and (action == 'edit') %}
+        {% set volume = injection.volume %}
+        {% set insulin_id = injection.insulin_id %}
+        {% set time = injection.time %}
+        {% set is_new = injection.is_new %}
+    {% endif %}
+
+    <!--div class="mdl-grid grid__category_list">
+        <div class="message">{message }}</div>
+    </div-->
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="mdl-card form--register">
+                <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text form--title">{{ title }}</h2>
+                </div>
+                <form autocomplete="off" method="POST" class="mdl-card__form" action="/injection/{{ action }}/{{ injection_id }}">
+                    <div class="mdl-grid">
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ volume }}" class="mdl-textfield__input" name="volume" type="number" id="volume" data-required>
+                                <label class="mdl-textfield__label" for="volume">Volume...</label>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ time|date('Y-m-d H:i') }}" class="mdl-textfield__input" name="time" type="text" id="time" data-required>
+                                <label class="mdl-textfield__label" for="time">Date and time...</label>
+                            </div>
+                        </div>
+
+                        <label class="mdl-radio__label" for="insulin_id">Insulin:</label>
+
+                                    {% for value in insulin %}
+                        <div class="mdl-cell--12-col">
+
+                        <label class = "mdl-radio mdl-js-radio">
+                                            <input type = "radio" id ="insulin_id" name = "insulin_id"
+                                                   class = "mdl-radio__button" value="{{ value.insulin_id }}">
+                                            <span class = "mdl-radio__label">{{ value.name }}</span>
+                                        </label>
+                        </div>
+                                    {% endfor %}
+
+                        <div class="mdl-cell--12-col mdl-cell--action">
+                            <button class="mdl-button mdl-js-button" type="submit">Save</button>
+                            <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
