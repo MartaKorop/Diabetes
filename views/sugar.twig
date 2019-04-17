@@ -1,0 +1,54 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+    <div class="row justify-content-center mdl-card__title">
+        <h2 class="mdl-card__title-text form--title">{{ title}}</h2>
+    </div>
+    {% if sugar %}
+        {#<div class="mdl-card mdl-card--list">#}
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                <tr>
+                    <th>Sugar level</th>
+                    <th>Strip name</th>
+                    <th>Time</th>
+                    <th>Is new?</th>
+                    <th>&nbsp;</th>
+                    <th>
+                        <a href="/sugar/add"><i class="material-icons">add_box</i></a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in sugar %}
+                    <tr>
+                        <td>{{ value.sugar_level }}</td>
+                        <td>{{ value.name }}</td>
+                        <td>{{ value.time|date('Y-m-d H:i')}}</td>
+                        <td>
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="is_new">
+                                {% if value.is_new == 1 %}
+                                    <input type="checkbox" id="is_new" name="is_new" {{ value.is_new }} class="mdl-checkbox__input" disabled checked>
+                                {% else %}
+                                    <input type="checkbox" id="is_new" name="is_new" {{ value.is_new }} class="mdl-checkbox__input" disabled>
+                                {% endif %}
+                            </label>
+                        </td>
+
+                        <td>
+                            <a href="/sugar/edit/{{ value.sugar_id }}"><i class="material-icons">edit</i></a>
+                        </td>
+                        <td>
+                            <a href="/sugar/delete/{{ value.sugar_id }}"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {#</div>#}
+    {% else %}
+        <div>You still have not any sugar!</div>
+        <a href="/sugar/add"><i class="material-icons">add_box</i></a>
+    {% endif %}
+{% endblock %}

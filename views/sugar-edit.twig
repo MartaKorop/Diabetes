@@ -1,0 +1,67 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <!--h3 class="page-title">{{title}}</h3-->
+
+    {% set sugar_level = '' %}
+    {% set strip_id = '' %}
+    {% set time = '' %}
+    {% set is_new = 0 %}
+
+    {% if sugar and (action == 'edit') %}
+        {% set sugar_level = sugar.sugar.level %}
+        {% set strip_id = strip.strip_id %}
+        {% set time = sugar.time %}
+        {% set is_new = sugar.is_new %}
+    {% endif %}
+
+    <!--div class="mdl-grid grid__category_list">
+        <div class="message">{message }}</div>
+    </div-->
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="mdl-card form--register">
+                <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text form--title">{{ title }}</h2>
+                </div>
+                <form autocomplete="off" method="POST" class="mdl-card__form" action="/sugar/{{ action }}/{{ sugar_id }}">
+                    <div class="mdl-grid">
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ sugar_level }}" class="mdl-textfield__input" name="sugar_level" type="number" step="0.1" id="sugar_level" data-required>
+                                <label class="mdl-textfield__label" for="sugar_level">Sugar level...</label>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ time|date('Y-m-d H:i') }}" class="mdl-textfield__input" name="time" type="datetime-local" id="time" data-required>
+                                <label class="mdl-textfield__label" for="time">Date and time...</label>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <label class="mdl-selectfield__label" for="strip_id">Strips</label>
+                            <div class="mdl-selectfield mdl-js-selectfield">
+                                <select id="strip_id" name="strip_id" class="mdl-selectfield__select" value="{{ strip_id }}">
+                                    {% for value in strip %}
+                                        <option value="{{value.strip_id}}">{{value.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col mdl-cell--action">
+                            <button class="mdl-button mdl-js-button" type="submit">Save</button>
+                            <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
