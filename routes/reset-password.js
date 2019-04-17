@@ -30,9 +30,10 @@ router.post('/:token', function(req, res, next) {
                 res.send("Something went wrong! " + err);
             } else {
                 if (results.changedRows) {
-                    res.render('signin', {
-                        title: 'Sign In',
-                    });
+                    // res.render('signin', {
+                    //     title: 'Sign In',
+                    // });
+                    res.redirect('/signin');
                 } else {
                     res.render('reset-password', {
                         title: 'Reset password',
