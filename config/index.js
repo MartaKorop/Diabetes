@@ -2,8 +2,8 @@ module.exports = {
     dbConfig: function (req, res, next) {
         return{
             connectionLimit: 100,
-            host: 'localhost',
-            user: 'root',
+            host: '',
+            user: '',
             password: '',
             database: 'diabetes',
             multipleStatements: true,
@@ -23,8 +23,8 @@ module.exports = {
         return {
             service: 'Gmail',
             auth: {
-                user: 'diabetesdiary2019',
-                pass: '123456789Diabetes'
+                user: '',
+                pass: ''
             },
         }
     },
