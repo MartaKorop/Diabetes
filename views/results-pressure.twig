@@ -1,0 +1,47 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>{{ title }}</h1>
+
+        {% if result %}
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>&nbsp;</th>
+                    <th>Value</th>
+                    <th>
+                        <a href="/pressure/add"><i class="material-icons">add_box</i></a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in result %}
+                    <tr>
+
+                        <td>{{ value.date }}</td>
+                        <td>{{ value.time }}</td>
+                        {% if value.value_p != '' %}
+                            <td><img src="/images/cardiogram.png" alt="cardiogram.png"></td>
+                            <td>{{ value.value_p }} BPM</td>
+                        {% endif %}
+                        {% if value.value_s != '' %}
+                            <td><img src="/images/blood-pressure.png" alt="blood-pressure.png"></td>
+                            <td>{{ value.value_s }} / {{ value.value_d }} mmHg</td>
+                            <td>&nbsp;</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div>You still have not any pessure/pulse entry! Please, press the button to add pessure/pulse entry.</div>
+            <a href="/pressure/add"><i class="material-icons">add_box</i></a>
+        {% endif %}
+        {% endblock %}
+    </div>
+</div>

@@ -1,0 +1,43 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+    <script>
+        window.onload = function () {
+
+            var data = [];
+            var dataSeries = {type: "column", xValueFormatString: "DD MMM YYYY",};
+            var dataPoints = [];
+
+            {% for value in glycated %}
+            dataPoints.push({
+                x: new Date("{{ value.time|date('Y-m-d H:i') }}"),
+                y: {{ value.value }},
+
+            });
+            {% endfor %}
+
+            dataSeries.dataPoints = dataPoints;
+            data.push(dataSeries);
+
+            var options = {
+                zoomEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: "{{ title }}"
+                },
+                data: data,
+                xValueFormatString: "DD MMM HH:mm",
+            };
+
+            $("#chartContainer").CanvasJSChart(options);
+        }
+    </script>
+
+    <div class="container">
+        <div id="chartContainer" _style="height: 720px; width: 100vw;"></div>
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    </div>
+
+{% endblock %}

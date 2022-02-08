@@ -1,0 +1,69 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="mdl-card form">
+                <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text form--title">{{ title }}</h2>
+                </div>
+                <form autocomplete="off" method="POST" class="mdl-card__form" action="/signup">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell--6-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" class="mdl-textfield__input" name="first_name" type="text" id="first_name" data-required>
+                                <label class="mdl-textfield__label" for="first_name">First name</label>
+                            </div>
+                        </div>
+                        <div class="mdl-cell--6-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" class="mdl-textfield__input" name="last_name" type="text" id="last_name" data-required>
+                                <label class="mdl-textfield__label" for="last_name">Last name</label>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" autocomplete="new-password" class="mdl-textfield__input" name="email" type="email" id="email" data-required>
+                                <label class="mdl-textfield__label" for="email">Email</label>
+                                <span class="mdl-textfield__error">Invalid email!</span>
+                                <i class="material-icons mdl-textfield__label__icon">error</i>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" autocomplete="new-password" class="mdl-textfield__input" name="password" type="password" id="password" data-required>
+                                <label class="mdl-textfield__label" for="password">Password</label>
+                                <span class="mdl-textfield__error">Invalid password!</span>
+                                <i class="material-icons material-icons--interact toggle-password" toggle="#password">visibility</i>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" autocomplete="new-password" class="mdl-textfield__input" name="confirmPassword" type="password" id="confirmPassword" data-required>
+                                <label class="mdl-textfield__label" for="confirmPassword">Confirm password</label>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell--12-col">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="accept_term">
+                                <input type="checkbox" name="accept_term" id="accept_term" class="mdl-checkbox__input" required>
+                                <span class="mdl-checkbox__label">You accept our<a href="/privacy-and-term"
+                                                                                   target="_blank" title="Terms of Use"> Terms of Use and Privacy Policy</a>.
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="mdl-cell--12-col mdl-cell--action">
+                            <button class="mdl-button mdl-js-button" type="submit">Sign up</button>
+                            <a class="mdl-button mdl-js-button mdl-button--second"
+                               href="/signin">Sing in</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
