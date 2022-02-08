@@ -5,7 +5,8 @@ module.exports = {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'diabet',
+            database: 'diabetes',
+            multipleStatements: true,
         }
     },
 
@@ -22,15 +23,16 @@ module.exports = {
         return {
             service: 'Gmail',
             auth: {
-                user: 'holynicholaslviv',
-                pass: '123456789zxcvbn'
+                user: 'diabetesdiary2019',
+                pass: '123456789Diabetes'
             },
         }
     },
 
     requireLogin: function(req, res, next) {
         if (!req.session.user) {
-            res.redirect('/signin?dest=' + req.baseUrl);
+            res.redirect('/signin?dest=' + req.originalUrl);
+            // res.redirect('http://localhost:8000/signin.html');
         } else {
             next();
         }
