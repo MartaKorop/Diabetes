@@ -1,57 +1,117 @@
-<header class="mdl-layout__header"><!--mdl-layout__header--waterfall-->
-
-
-
-        <!--div class="mdl-layout__header-row">
-            <div class="mdl-layout-spacer"></div>
-
-            <div class="mdl-js-ripple-effect mdl-color--primary-dark">
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                <i class="material-icons">add</i>
-            </button>
-            </div>
-
-        </div-->
+<header class="mdl-layout__header">
 
     <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title"><a href="/" title="Main page">Diabetes</a></span>
+        <a href="/"><i><img src="/images/Blue_circle_for_diabetes.png" alt="Blue_circle_for_diabetes.png"
+                            style="max-height:54px;"></i></a>
         <div class="mdl-layout-spacer"></div>
 
         <nav class="mdl-navigation mdl-layout--large-screen-only">
             {% if session.user %}
+                <a class="mdl-navigation__link hovered" href="/log/add"><img src="/images/blood.png" alt="blood.png">
+                    Log
+                    entry</a>
                 <div class="dropdown">
-                    <button class="dropbtn">Add</button>
+                    <a class="mdl-navigation__link dropbtn"><i class="material-icons">add_circle_outline</i> Add</a>
                     <div class="dropdown-content">
-                        <a href="/note/add">Note</a>
-                        <a href="/sugar/add">Sugar</a>
-                        <a href="/injection/add">Injection</a>
+                        <a href="/log/add">Log entry</a>
                         <a href="/glycated/add">Glycated hb</a>
-                        <a href="/pressure/add">Pressure</a>
-                        <a href="/pulse/add">Pulse</a>
+                        <a href="/pressure/add">Pressure/Pulse</a>
                         <a href="/weight/add">Weight</a>
+                        <a href="/doctor/add">Doctor</a>
                     </div>
                 </div>
-                <a class="mdl-navigation__link" href="/profile"><i class="material-icons">account_circle</i> My profile</a>
-
-                <a class="mdl-navigation__link" href="/signout"><i class="material-icons">exit_to_app</i> Sign out</a>
+                <div class="dropdown">
+                    <button class="dropbtn"><img src="/images/results.png" alt="results.png"> Get results</button>
+                    <div class="dropdown-content">
+                        <a href="/logbook">Sugar/Injection</a>
+                        <a href="/glycated/results">Glycated hb</a>
+                        <a href="/pressure/results">Pressure/Pulse</a>
+                        <a href="/weight/results">Weight</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn"><img src="/images/bar-chart.png" alt="bar-chart.png"> Get statistic</button>
+                    <div class="dropdown-content">
+                        <a href="/statistic/sugar/data">Sugar</a>
+                        {#                        <a href="/injection">Injection</a>#}
+                        <a href="/statistic/glycated/column">Glycated hb</a>
+                        <a href="/statistic/pressure/line">Pressure</a>
+                        <a href="/statistic/pulse/line">Pulse</a>
+                        <a href="/statistic/weight/line">Weight</a>
+                    </div>
+                </div>
+                <a class="mdl-navigation__link hovered" href="/letter"><i class="material-icons">mail_outline</i> Send
+                    letter</a>
+                <a class="mdl-navigation__link hovered" href="/profile"><i class="material-icons">account_circle</i> My
+                    profile</a>
+                <a class="mdl-navigation__link hovered" href="/signout"><i class="material-icons">exit_to_app</i> Sign
+                    out</a>
             {% else %}
-                <a class="mdl-navigation__link" href="/signup"><i class="material-icons">person_add</i> Sign up</a>
-                <a class="mdl-navigation__link" href="/signin">Sign in</a>
+                <a class="mdl-navigation__link hovered" href="/signup"><i class="material-icons">person_add</i> Sign up</a>
+                <a class="mdl-navigation__link hovered" href="/signin">Sign in</a>
             {% endif %}
         </nav>
 
     </div>
 
-    </header>
-    <div class = "mdl-layout__drawer">
-        <span class = "mdl-layout-title">Diabetes</span>
-        {% if session.user %}
-
-            <a class="mdl-navigation__link" href="/profile">My profile</a>
-
+</header>
+<div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Diabetes</span>
+    {% if session.user %}
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="/profile"> My profile</a>
             <a class="mdl-navigation__link" href="/signout">Sign out</a>
-        {% else %}
-            <a class="mdl-navigation__link" href="/signup">Sign up</a>
-            <a class="mdl-navigation__link" href="/signin">Sign in</a>
-        {% endif %}
-    </div>
+
+            <h5>Add</h5>
+            <ul class="drawer-list">
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/log/add">Log entry</a>
+
+                </li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/glycated/add">Glycated hb</a>
+
+                </li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/pressure/add">Pressure/Pulse</a>
+
+                </li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/weight/add">Weight</a>
+
+                </li>
+            </ul>
+            <h5>Get results</h5>
+            <ul class="drawer-list">
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/logbook">Sugar/Injection</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/glycated/results">Glycated hb</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/pressure/results">Pressure/Pulse</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/weight/results">Weight</a></li>
+            </ul>
+
+
+            <h5>Get statistic</h5>
+            <ul class="drawer-list">
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/graph/sugar">Sugar</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/injection">Injection</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/glycated">Glycated hb</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/pressure">Pressure</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/pulse">Pulse</a></li>
+                <li class="drawer-list__item">
+                    <a class="mdl-navigation__link" href="/weight">Weight</a></li>
+            </ul>
+        </nav>
+    {% else %}
+        <a class="mdl-navigation__link" href="/signup">Sign up</a>
+        <a class="mdl-navigation__link" href="/signin">Sign in</a>
+    {% endif %}
+</div>

@@ -1,8 +1,6 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <!--h3 class="page-title">{{title}}</h3-->
-
     {% set insulin_id = '' %}
     {% set name = '' %}
     {% set type = '' %}
@@ -17,56 +15,73 @@
         {% set user_id = insulin.user_id %}
     {% endif %}
 
-    <!--div class="mdl-grid grid__category_list">
-        <div class="message">{message }}</div>
-    </div-->
+    {% set iType = {
+        'short': 'Short',
+        'long': 'Long'
+    } %}
+
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="mdl-card form--register">
+            <div class="mdl-card form">
                 <div class="mdl-card__title">
                     <h2 class="mdl-card__title-text form--title">{{ title }}</h2>
                 </div>
-                <form autocomplete="off" method="POST" class="mdl-card__form" action="/profile/insulin/{{ action }}/{{ insulin_id }}">
+                <form autocomplete="off" method="POST" class="mdl-card__form"
+                      action="/profile/insulin/{{ action }}/{{ insulin_id }}">
                     <div class="mdl-grid">
                         {% if insulin and (action == 'edit') %}
-                        <div class="mdl-cell--12-col">
-                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ insulin_id }}" class="mdl-textfield__input" name="insulin_id" type="text" id="insulin_id" data-required disabled>
-                                <label class="mdl-textfield__label" for="insulin_id">Insulin id...</label>
+                            <div class="mdl-cell--12-col">
+                                <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                    <input value="{{ insulin_id }}" class="mdl-textfield__input" name="insulin_id"
+                                           type="text" id="insulin_id" data-required disabled>
+                                    <label class="mdl-textfield__label" for="insulin_id">Insulin id</label>
+                                </div>
                             </div>
-                        </div>
                         {% endif %}
                         <div class="mdl-cell--12-col">
                             <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ name }}" class="mdl-textfield__input" name="name" type="text" id="name" data-required>
-                                <label class="mdl-textfield__label" for="name">Name...</label>
+                                <input value="{{ name }}" class="mdl-textfield__input" name="name" type="text" id="name"
+                                       data-required>
+                                <label class="mdl-textfield__label" for="name">Name</label>
                             </div>
                         </div>
 
                         <div class="mdl-cell--12-col">
-                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ type }}" class="mdl-textfield__input" name="type" type="text" id="type" data-required>
-                                <label class="mdl-textfield__label" for="type">Type...</label>
+
+                            <div class="mdl-textfield mdl-js-textfield getmdl-select mdl-textfield--floating-label">
+                                <input type="text" value=""
+                                       class="mdl-textfield__input" id="type">
+                                <input type="hidden" value="" name="type">
+                                <label for="type" class="mdl-textfield__label">Type</label>
+                                <ul for="type" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                    {% for key,value in iType %}
+                                        {% if key == type %}
+                                            {% set sel = ' data-selected="true"' %}
+                                        {% else %}
+                                            {% set sel = '' %}
+                                        {% endif %}
+                                        <li class="mdl-menu__item"
+                                            data-val="{{ key }}" {{ sel }}>{{ value }}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
-
                         <div class="mdl-cell--12-col">
                             <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ volume }}" class="mdl-textfield__input" name="volume" type="number" id="volume" data-required>
-                                <label class="mdl-textfield__label" for="type">Volume...</label>
+                                <input value="{{ volume }}" class="mdl-textfield__input" name="volume" type="number"
+                                       id="volume" min="0" data-required>
+                                <label class="mdl-textfield__label" for="type">Volume</label>
                             </div>
                         </div>
-
                         <div class="mdl-cell--12-col mdl-cell--action">
                             <button class="mdl-button mdl-js-button" type="submit">Save</button>
-                            <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                            <a href="#" onclick="window.history.back();"
+                               class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-
 {% endblock %}

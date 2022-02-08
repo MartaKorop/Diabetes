@@ -1,149 +1,272 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
+    {% if user.gender == 'male' %}
+        {% set maleChecked = ' checked="checked"' %}
+        {% set femaleChecked = '' %}
+    {% else %}
+        {% set maleChecked = '' %}
+        {% set femaleChecked = ' checked="checked"' %}
+    {% endif %}
 
-    <div class="row justify-content-center mdl-card__title">
-        <h2 class="mdl-card__title-text form--title">{{ title}}</h2>
-    </div>
+    {% set dType = {
+        'type1': 'Type 1',
+        'type2': 'Type 2',
+        'gestational': 'Gestational',
+        'lada': 'LADA'
+    } %}
+
+    {% set bType = {
+        '0': '0',
+        'A': 'A',
+        'B': 'B',
+        'AB': 'AB'
+    } %}
+
+    {% set rhType = {
+        'plus': '+',
+        'minus': '-'
+    } %}
 
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <div class="mdl-tabs__tab-bar">
             <a href="#general" class="mdl-tabs__tab is-active">General</a>
+            <a href="#detail" class="mdl-tabs__tab">Detail</a>
             <a href="#insulin" class="mdl-tabs__tab">Insulin</a>
-            <a href="#strips" class="mdl-tabs__tab">Strips</a>
+            <a href="#strip" class="mdl-tabs__tab">Strips</a>
         </div>
 
         <div class="mdl-tabs__panel is-active" id="general">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="mdl-card form--login mdl-shadow--2dp" style="width: 680px;">
+                    <div class="mdl-card form mdl-shadow--2dp" style="width: 680px;">
 
                         <form autocomplete="off" method="POST" class="mdl-card__form" action="/profile/edit">
-                            <!--div style="width: 100%;" class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{##}{ user.email }}" autocomplete="new-password" class="mdl-textfield__input" name="email" type="email" id="email" data-required disabled>
-                                <label class="mdl-textfield__label" for="email">Email...</label>
-                                <span class="mdl-textfield__error">Invalid email!</span>
-                            </div-->
 
                             <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ user.first_name }}" autocomplete="new-password" class="mdl-textfield__input" name="first_name" type="text" id="first_name" data-required>
-                                <label class="mdl-textfield__label" for="first_name">First name...</label>
+                                <input value="{{ user.first_name }}" autocomplete="new-password"
+                                       class="mdl-textfield__input" name="first_name" type="text" id="first_name"
+                                       data-required>
+                                <label class="mdl-textfield__label" for="first_name">First name</label>
                                 <!--span class="mdl-textfield__error">Invalid value</span-->
                             </div>
 
                             <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ user.last_name }}" autocomplete="new-password" class="mdl-textfield__input" name="last_name" type="text" id="last_name" data-required>
-                                <label class="mdl-textfield__label" for="last_name">Last name...</label>
-                                <!--span class="mdl-textfield__error">Invalid value</span-->
+                                <input value="{{ user.last_name }}" autocomplete="new-password"
+                                       class="mdl-textfield__input" name="last_name" type="text" id="last_name"
+                                       data-required>
+                                <label class="mdl-textfield__label" for="last_name">Last name</label>
                             </div>
 
                             <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ user.phone }}" autocomplete="new-password" class="mdl-textfield__input" name="phone" type="tel" id="phone">
-                                <label class="mdl-textfield__label" for="phone">Phone...</label>
+                                <input value="{{ user.phone }}" autocomplete="new-password" class="mdl-textfield__input"
+                                       name="phone" type="tel" id="phone">
+                                <label class="mdl-textfield__label" for="phone">Phone</label>
                                 <span class="mdl-textfield__error">Invalid value!</span>
                             </div>
 
                             <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ user.birthday|date('Y-m-d') }}" autocomplete="off" class="mdl-textfield__input" name="birthday" type="date" id="birthday">
-                                <label class="mdl-textfield__label" for="birthday">Birthday...</label>
+                                <input value="{{ user.birthday|date('Y-m-d') }}" autocomplete="off"
+                                       class="mdl-textfield__input" name="birthday" type="date" id="birthday">
+                                <label class="mdl-textfield__label" for="birthday">Birthday</label>
                                 <span class="mdl-textfield__error">Invalid value!</span>
                             </div>
 
                             <div class="is-dirty mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
-                                <input value="{{ user.height }}" autocomplete="new-password" class="mdl-textfield__input" name="height" type="text" id="height">
-                                <label class="mdl-textfield__label" for="height">Height...</label>
-                                <span class="mdl-textfield__error">Invalid value!</span>
-                            </div>
+                                <label class="mdl-textfield__label">Gender</label>
 
-
-                            <!--div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4"  style="text-align: center;">
-                                    <button type="submit" class="mdl-button mdl-js-button">Save</button>
+                                <div class="mdl-grid">
+                                    <div class="mdl-cell--6-col">
+                                        <label class="mdl-radio mdl-js-radio">
+                                            <input type="radio" id="male" name="gender" class="mdl-radio__button"
+                                                   value="male" {{ maleChecked }}>
+                                            <span class="mdl-radio__label">Male</span>
+                                        </label>
+                                    </div>
+                                    <div class="mdl-cell--6-col">
+                                        <label class="mdl-radio mdl-js-radio">
+                                            <input type="radio" id="female" name="gender" class="mdl-radio__button"
+                                                   value="female" {{ femaleChecked }}>
+                                            <span class="mdl-radio__label">Female</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
-                            </div-->
+                            </div>
                             <div class="mdl-cell--12-col mdl-cell--action">
                                 <button class="mdl-button mdl-js-button" type="submit">Save</button>
-                                <a href="#"  onclick="window.history.back();" class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                                <a href="#" onclick="window.history.back();"
+                                   class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mdl-tabs__panel" id="insulin">
-            <!--div class="message">message}}</div-->
-            {% if insulin %}
-                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Volume</th>
-                        <th>&nbsp;</th>
-                        <th>
-                            <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for value in insulin %}
-                        <tr>
-                            <td>{{ value.name }}</td>
-                            <td>{{ value.type }}</td>
-                            <td>{{ value.volume }}</td>
-                            <td>
-                                <a href="/profile/insulin/edit/{{ value.insulin_id }}"><i class="material-icons">edit</i></a>
-                            </td>
-                            <td>
-                                <a href="/profile/insulin/delete/{{ value.insulin_id }}"><i class="material-icons">delete</i></a>
-                            </td>
-                        </tr>
-                    {% endfor %}
 
-                    </tbody>
-                </table>
-            {% else %}
-                <div>You still have not any insulin!</div>
-                <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
-            {% endif %}
+        <div class="mdl-tabs__panel" id="detail">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="mdl-card form mdl-shadow--2dp" style="width: 680px;">
+
+                        <form autocomplete="off" method="POST" class="mdl-card__form" action="/profile/detail/edit">
+                            <div class="mdl-grid">
+
+                                <div class="mdl-cell--6-col">
+                                    <div class="mdl-textfield mdl-js-textfield getmdl-select mdl-textfield--floating-label">
+                                        <input type="text" value="" class="mdl-textfield__input"
+                                               id="diabetes_type" readonly>
+                                        <input type="hidden" value="" name="diabetes_type">
+                                        <label for="diabetes_type" class="mdl-textfield__label">Diabetes type</label>
+                                        <ul for="diabetes_type" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                            {% for key,value in dType %}
+                                                {% if key == user.diabetes_type %}
+                                                    {% set sel = ' data-selected="true"' %}
+                                                {% else %}
+                                                    {% set sel = '' %}
+                                                {% endif %}
+                                                <li class="mdl-menu__item"
+                                                    data-val="{{ key }}" {{ sel }}>{{ value }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mdl-cell--6-col">
+                                    <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                        <input value="{{ user.diagnosed }}" autocomplete="new-password"
+                                               class="mdl-textfield__input" name="diagnosed" type="number"
+                                               id="diagnosed" min="1900">
+                                        <label class="mdl-textfield__label" for="diagnosed">Year of
+                                            diagnosing</label>
+                                    </div>
+                                </div>
+                                <div class="mdl-cell--6-col">
+
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+                                        <input type="text" value=""
+                                               class="mdl-textfield__input" id="blood_group">
+                                        <input type="hidden" value="" name="blood_group">
+                                        <label for="blood_group" class="mdl-textfield__label">Blood group</label>
+                                        <ul for="blood_group" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                            {% for key,value in bType %}
+                                                {% if key == user.blood_group %}
+                                                    {% set sel = ' data-selected="true"' %}
+                                                {% else %}
+                                                    {% set sel = '' %}
+                                                {% endif %}
+                                                <li class="mdl-menu__item"
+                                                    data-val="{{ key }}" {{ sel }}>{{ value }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="mdl-cell--6-col">
+                                    <div class="mdl-textfield mdl-js-textfield getmdl-select mdl-textfield--floating-label">
+                                        <input type="text" value=""
+                                               class="mdl-textfield__input" id="rh">
+                                        <input type="hidden" value="" name="rh">
+                                        <label for="rh" class="mdl-textfield__label">Rh</label>
+                                        <ul for="rh" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                            {% for key,value in rhType %}
+                                                {% if key == user.rh %}
+                                                    {% set sel = ' data-selected="true"' %}
+                                                {% else %}
+                                                    {% set sel = '' %}
+                                                {% endif %}
+                                                <li class="mdl-menu__item"
+                                                    data-val="{{ key }}" {{ sel }}>{{ value }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mdl-cell--6-col">
+                                    <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                        <input value="{{ user.height }}" autocomplete="new-password"
+                                               class="mdl-textfield__input" name="height" type="number" id="height"
+                                               min="0" max="300">
+                                        <label class="mdl-textfield__label" for="height">Height (cm)</label>
+                                        <span class="mdl-textfield__error">Invalid value!</span>
+                                    </div>
+                                </div>
+                                <div class="mdl-cell--12-col mdl-cell--action">
+                                    <button class="mdl-button mdl-js-button" type="submit">Save</button>
+                                    <a href="#" onclick="window.history.back();"
+                                       class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mdl-tabs__panel" id="strips">
-            {% if strips %}
-                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Device name</th>
-                        <th>Amount</th>
-                        <th>&nbsp;</th>
-                        <th>
-                            <a href="/profile/strip/add"><i class="material-icons">add_box</i></a>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for value in strips %}
-                        <tr>
-                            <td>{{ value.name }}</td>
-                            <td>{{ value.device_name }}</td>
-                            <td>{{ value.amount }}</td>
-                            <td>
-                                <a href="/profile/strip/edit/{{ value.strip_id }}"><i class="material-icons">edit</i></a>
-                            </td>
-                            <td>
-                                <a href="/profile/strip/delete/{{ value.strip_id }}"><i class="material-icons">delete</i></a>
-                            </td>
-                        </tr>
-                    {% endfor %}
 
-                    </tbody>
-                </table>
-            {% else %}
-                <div>You still have not any strips!</div>
-                <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
-            {% endif %}
+        <div class="mdl-tabs__panel" id="insulin">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="mdl-grid">
+                        {% if insulin %}
+                            {% for value in insulin %}
+                                <div class="mdl-cell--12-col card">
+
+                                    <div class="mdl-card mdl-shadow--2dp form">
+                                        <div class="mdl-card__title mdl-card--expand">
+                                            <h2 class="mdl-card__title-text">{{ value.name }}</h2>
+                                        </div>
+                                        <div class="mdl-card__supporting-text">
+                                            <strong>Type:</strong> {{ value.type }}
+                                        </div>
+                                        <div class="mdl-card__supporting-text">
+                                            <strong>Volume:</strong> {{ value.volume }}
+                                        </div>
+                                        <div class="mdl-card__actions mdl-card--border">
+                                            <a href="/profile/insulin/edit/{{ value.insulin_id }}"><i
+                                                        class="material-icons">edit</i></a>
+                                            <span>&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div>
+                                <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
+
+                            </div>
+                        {% else %}
+                            <div>You still have not any insulin! Please, press the button to add insulin.</div>
+                            <a href="/profile/insulin/add"><i class="material-icons">add_box</i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-tabs__panel" id="strip">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="mdl-grid">
+                        {% if strips %}
+                            <div class="mdl-cell--12-col card">
+                                <div class="mdl-card mdl-shadow--2dp form">
+                                    <div class="mdl-card__title mdl-card--expand">
+                                        <h2 class="mdl-card__title-text">{{ strips.name }}</h2>
+                                    </div>
+                                    <div class="mdl-card__supporting-text">
+                                        <strong>Device name:</strong> {{ strips.device_name }}
+                                    </div>
+                                    <div class="mdl-card__supporting-text">
+                                        <strong>Amount:</strong> {{ strips.amount }}
+                                    </div>
+                                    <div class="mdl-card__actions mdl-card--border">
+                                        <a href="/profile/strip/edit/{{ strips.strip_id }}"><i class="material-icons">edit</i></a>
+                                        <span>&nbsp;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div>You still have not any strips! Please, press the button to add strip.</div>
+                            <a href="/profile/strip/add"><i class="material-icons">add_box</i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

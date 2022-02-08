@@ -1,12 +1,11 @@
 let express = require('express');
 
 module.exports = {
-
     add: function (req, params, callback) {
         let db = req.db;
 
-        let sql = 'INSERT INTO insulin'+
-            ' (name, type, volume, is_active, user_id)' +
+        let sql = 'INSERT INTO doctor' +
+            ' (first_name, last_name, email, phone, user_id)' +
             ' VALUES (?, ?, ?, ?, ?)';
         db.query(sql, params, function (err, results) {
             if (err) {
@@ -17,23 +16,11 @@ module.exports = {
         });
     },
 
-    getByUserId: function (req, params, callback) {
+    getByEmailAndUser: function (req, params, callback) {
         let db = req.db;
 
-        let sql = 'SELECT * FROM insulin WHERE user_id = ? AND is_active = 1 ORDER BY type DESC';
-        db.query(sql, params, function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
+        let sql = 'SELECT * FROM doctor WHERE user_id = ? AND email = ?';
 
-    getById: function (req, params, callback) {
-        let db = req.db;
-
-        let sql = 'SELECT * FROM insulin WHERE insulin_id = ? AND user_id = ?';
         db.query(sql, params, function (err, results) {
             if (err) {
                 callback(err, null);
@@ -43,12 +30,11 @@ module.exports = {
         });
     },
 
-    update: function (req, params, callback) {
+    getListByUser: function (req, params, callback) {
         let db = req.db;
 
-        let sql = 'UPDATE insulin'+
-            ' SET name = ?, type = ?, volume = ?'+
-            ' WHERE insulin_id = ?';
+        let sql = 'SELECT * FROM doctor WHERE user_id = ?';
+
         db.query(sql, params, function (err, results) {
             if (err) {
                 callback(err, null);

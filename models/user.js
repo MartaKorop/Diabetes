@@ -1,20 +1,5 @@
 let express = require('express');
 
-/*
-CREATE TABLE diabet.user (
-  user_id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  first_name VARCHAR(32) NOT NULL,
-  last_name VARCHAR(32) NOT NULL,
-  email VARCHAR(64) NOT NULL,
-  phone VARCHAR(13) NOT NULL,
-  birthday TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  password VARCHAR(64) NOT NULL,
-  height DECIMAL(10, 0) DEFAULT NULL,
-  create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (user_id)
-)*/
-
 module.exports = {
   
     create: function (req, params, callback) {
@@ -58,11 +43,26 @@ module.exports = {
         });
     },
 
+    updateGeneral: function (req, params, callback) {
+        let db = req.db;
+
+        let sql = 'UPDATE user' +
+            ' SET first_name = ?, last_name = ?, phone = ?, birthday = ?, gender = ?, update_at = NOW()' +
+            ' WHERE user_id = ?';
+        db.query(sql, params, function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
     update: function (req, params, callback) {
         let db = req.db;
 
         let sql = 'UPDATE user' +
-            ' SET first_name = ?, last_name = ?, phone = ?, birthday = ?, height = ?, update_at = NOW()' +
+            ' SET height = ?, diabetes_type = ?, blood_group = ?, rh = ?, diagnosed = ?, update_at = NOW()' +
             ' WHERE user_id = ?';
         db.query(sql, params, function (err, results) {
             if(err) {
@@ -81,6 +81,7 @@ module.exports = {
            return results;
         });
     },
+
 
     updatePassword: function (req, params, callback) {
         let db = req.db;

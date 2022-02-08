@@ -1,14 +1,12 @@
 let express = require('express');
 let bcrypt = require('bcrypt');
 let router = express.Router();
-
 let config = require('../config');
 
-let User = require('../models/user');
 let Insulin = require('../models/insulin');
 let Strip = require('../models/strip');
 let Sugar = require('../models/sugar');
-let Injection = require('../models/injection')
+let Injection = require('../models/injection');
 
 router.get('/', function(req, res, next) {
     res.render('index', {
@@ -28,8 +26,8 @@ router.get('/add', config.requireLogin, function (req, res, next) {
                 if (err) {
                     res.send("Something went wrong! " + err);
                 } else {
-                    res.render('note-edit', {
-                        title: 'Add new note',
+                    res.render('log-edit', {
+                        title: 'New log entry',
                         //action: 'add',
                         strip: stripRes,
                         insulin: insulinRes,
@@ -74,9 +72,7 @@ router.post('/add', config.requireLogin, function (req, res, next) {
             }
         });
     }
-    res.redirect('/profile');
-    //(sugar_level, strip_id, time, user_id, is_new)
-    //((volume, insulin_id, time, user_id, is_new)
+    res.redirect('/log/add');
 });
 
 module.exports = router;

@@ -5,9 +5,6 @@ var router = express.Router();
 var User = require('../models/user');
 
 var config = require('../config');
-// router.get('/', function(req, res, next) {
-//     res.render('index', { title: 'Express' });
-// });
 
 router.get('/', function (req, res, next) {
     res.render('signup', {
@@ -16,7 +13,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    //            ' (first_name, last_name, email, phone, birthday, password, height)'+
     var {first_name, last_name, email, password, confirmPassword} = req.body;
     var session = req.session;
 
@@ -58,10 +54,6 @@ router.post('/', function (req, res, next) {
                                             id:       id_result.user_id,
                                         };
                                         session.user.expires = new Date(Date.now() + 3 * 24 * 3600 * 1000);
-                                        //TODO
-                                        //confirm email
-                                        //redirect to email confirm
-                                        //then to user profile
                                         res.redirect('/');
                                     }
                                 });

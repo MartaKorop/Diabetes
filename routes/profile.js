@@ -40,14 +40,34 @@ router.get('/', config.requireLogin, function (req, res, next) {
 router.post('/edit', config.requireLogin, function (req, res, next) {
     let user_id = req.session.user.id;
 
-    let {first_name, last_name, phone, birthday, height} = req.body;
+    let {first_name, last_name, phone, birthday, gender} = req.body;
     let userData = [
         first_name,
         last_name,
         phone,
         birthday,
-        height,
+        gender,
         user_id,
+    ];
+    User.updateGeneral(req, userData, function (err, results) {
+        if (err) {
+            res.send("Something went wrong! " + err);
+        } else {
+            res.redirect('/profile');
+        }
+    });
+});
+
+router.post('/detail/edit', config.requireLogin, function (req, res, next) {
+    let user_id = req.session.user.id;
+    let {diabetes_type, diagnosed, blood_group, rh, height} = req.body;
+    let userData = [
+        height,
+        diabetes_type,
+        blood_group,
+        rh,
+        diagnosed,
+        user_id
     ];
     User.update(req, userData, function (err, results) {
         if (err) {
@@ -70,7 +90,7 @@ router.post('/insulin/add', config.requireLogin, function (req, res, next) {
     let user_id = req.session.user.id;
     let {name, type, volume } = req.body;
 
-    let params = [name, type, volume, user_id,];
+    let params = [name, type, volume, 1, user_id,];
 
     Insulin.add(req, params, function (err, results) {
         if (err) {
@@ -82,9 +102,12 @@ router.post('/insulin/add', config.requireLogin, function (req, res, next) {
 });
 
 router.get('/insulin/edit/:path', config.requireLogin, function (req, res, next) {
+    let user_id = req.session.user.id;
     let insulin_id = req.params.path;
 
-    Insulin.getById(req, insulin_id, function (err, results) {
+    let params = [insulin_id, user_id];
+
+    Insulin.getById(req, params, function (err, results) {
         if (err) {
             res.send("Something went wrong! " + err);
         } else {
@@ -127,7 +150,7 @@ router.post('/strip/add', config.requireLogin, function (req, res, next) {
     let user_id = req.session.user.id;
     let {device_name, name, amount} = req.body;
 
-    let params = [device_name, name, amount, user_id,];
+    let params = [device_name, name, amount, 1, user_id,];
 
     Strip.add(req, params, function (err, results) {
         if (err) {
@@ -139,9 +162,12 @@ router.post('/strip/add', config.requireLogin, function (req, res, next) {
 });
 
 router.get('/strip/edit/:path', config.requireLogin, function (req, res, next) {
+    let user_id = req.session.user.id;
     let strip_id = req.params.path;
 
-    Strip.getById(req, strip_id, function (err, results) {
+    let params = [strip_id, user_id];
+
+    Strip.getById(req, params, function (err, results) {
         if (err) {
             res.send("Something went wrong! " + err);
         } else {
@@ -170,8 +196,5 @@ router.post('/strip/edit/:path', config.requireLogin, function (req, res, next) 
         }
     });
 });
-
-//TODO
-//possibility to delete insulin and strips
 
 module.exports = router;

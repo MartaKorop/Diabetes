@@ -1,12 +1,36 @@
 {% extends 'layout.twig' %}
-
-{% block body %}
-  <h1>{{title}}</h1>
-  <p>Welcome to {{title}}</p>
-  <br><br><br><br><br><br><br>
-  <br><br><br><br><br><br><br>
-  <br><br><br><br><br><br><br>
-  <br><br><br><br><br><br><br>
-  <br><br><br><br><br><br><br>
-  <br><br><br><br><br><br><br>
-{% endblock %}
+    {% block body %}
+        <div class="container">
+            <div class="row justify-content-center">  {% if session.user %}
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                            <img src="../public/images/diabetes-south-africa.png">
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <h1 class="mdl-card__title-text"><a
+                                        href="/profile">Welcome {{ session.user.first_name }} {{ session.user.last_name }}</a>
+                            </h1>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border card-link">
+                            <a href="/log/add">
+                                &nbsp;&nbsp;Get Started
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                            <img src="../public/images/diabetes-south-africa.png">
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <h1 class="mdl-card__title-text"><a href="signin">Welcome to {{ title }}</a></h1>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border card-link">
+                            <a class="" href="/signup">&nbsp;&nbsp;Get Started
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+    <script>
+        window.onload = function () {
+            var options = {
+                animationEnabled: true,
+                title: {
+                    text: "{{ title }}"
+                },
+                data: [{
+                    type: "doughnut",
+                    innerRadius: "50%",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabel: "{label}: #percent%",
+                    dataPoints: [
+                        {label: "Hypoglicemia", y: {{ result.hypo }} },
+                        {label: "Low glucose", y: {{ result.low }} },
+                        {label: "Target glucose", y: {{ result.target }} },
+                        {label: "High glucose", y: {{ result.hi }} },
+                        {label: "Hyperglicemia", y: {{ result.hyper }} }
+                    ],
+                }],
+            };
+            $("#chartContainer").CanvasJSChart(options);
+        }
+    </script>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="mdl-grid statistic">
+                <div class="mdl-cell--2-col mdl-cell--action">
+                    <button class="mdl-button mdl-js-button" type="button"><a href="/statistic/sugar/doughnut/7">7
+                            days</a></button>
+                </div>
+                <div class="mdl-cell--2-col mdl-cell--action">
+                    <button class="mdl-button mdl-js-button" type="button"><a href="/statistic/sugar/doughnut/14">14
+                            days</a></button>
+                </div>
+                <div class="mdl-cell--2-col mdl-cell--action">
+                    <button class="mdl-button mdl-js-button" type="button"><a href="/statistic/sugar/doughnut/30">30
+                            days</a></button>
+                </div>
+                <div class="mdl-cell--2-col mdl-cell--action">
+                    <button class="mdl-button mdl-js-button" type="button"><a href="/statistic/sugar/doughnut/90">90
+                            days</a></button>
+                </div>
+                <div class="mdl-cell--2-col mdl-cell--action">
+                    <button class="mdl-button mdl-js-button" type="button"><a href="/statistic/sugar/line">Statistic</a>
+                    </button>
+                </div>
+                <div class="mdl-cell--2-col mdl-cell--action">
+                    <button class="mdl-button mdl-js-button" type="button"><a href="/statistic/sugar/data">Data</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="chartContainer" _style="height: 370px; width: 100%;"></div>
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="mdl-card form">
+                <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text form--title">{{ title }}</h2>
+                </div>
+                <form autocomplete="off" method="POST" class="mdl-card__form" action="/pressure/add/">
+                    <div class="mdl-grid">
+
+                        <div class="mdl-cell--6-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" class="mdl-textfield__input" name="systolic" type="number" step="1"
+                                       id="systolic" min="1" max="300">
+                                <label class="mdl-textfield__label" for="systolic">Systolic (mmHg)</label>
+                            </div>
+                        </div>
+                        <div class="mdl-cell--6-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" class="mdl-textfield__input" name="diastolic" type="number"
+                                       id="short_volume" min="1" max="300" step="1">
+                                <label class="mdl-textfield__label" for="diastolic">Diastolic (mmHg)</label>
+                            </div>
+                        </div>
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="" class="mdl-textfield__input" name="pulse" type="number" id="pulse"
+                                       min="1" max="300" step="1">
+                                <label class="mdl-textfield__label" for="pulse">Pulse (BPM)</label>
+                            </div>
+                        </div>
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-textfield--floating-label mdl-textfield mdl-js-textfield">
+                                <input value="{{ time|date('d-m-Y H:i') }}" class="mdl-textfield__input" name="time"
+                                       type="datetime-local" id="time" data-required>
+                                <label class="mdl-textfield__label" for="time">Date and time</label>
+                            </div>
+                        </div>
+                        <div class="mdl-cell--12-col mdl-cell--action">
+                            <button class="mdl-button mdl-js-button" type="submit">Save</button>
+                            <a href="#" onclick="window.history.back();"
+                               class="mdl-button mdl-js-button mdl-button--second">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

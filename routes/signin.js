@@ -33,6 +33,8 @@ router.post('/', function (req, res, next) {
                     session.user = {
                         email:    userData.email,
                         id:       userData.user_id,
+                        first_name: userData.first_name,
+                        last_name: userData.last_name,
                     };
                     session.user.expires = new Date(Date.now() + 3 * 24 * 3600 * 1000);
                     res.redirect(dest);

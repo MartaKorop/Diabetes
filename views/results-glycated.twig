@@ -1,0 +1,34 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>{{ title }}</h1>
+        {% if result %}
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Value</th>
+                    <th>
+                        <a href="/glycated/add"><i class="material-icons">add_box</i></a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in result %}
+                <tr>
+                    <td>{{ value.time|date('d.m.Y') }}</td>
+                    <td>&nbsp;</td>
+                    <td>{{ value.value }} %</td>
+                    <td>&nbsp;</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div>You still have not any glycated Hb entry! Please, press the button to add glycated Hb entry.</div>
+            <a href="/glycated/add"><i class="material-icons">add_box</i></a>
+        {% endif %}
+        {% endblock %}
+    </div>
+</div>

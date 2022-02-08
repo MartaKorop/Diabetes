@@ -46,9 +46,8 @@ router.post('/add', config.requireLogin, function (req, res, next) {
     let user_id = req.session.user.id;
     let {volume, insulin_id, time } = req.body;
 
-    //is_new = is_new === 'on' ? 1 : 0;
 
-    let params = [volume, insulin_id, time, user_id, 0 ];
+    let params = [volume, insulin_id, time, user_id];
     Injection.add(req, params, function (err, results) {
         if (err) {
             res.send("Something went wrong! " + err);
